@@ -9,4 +9,5 @@ add_executable(variadic main.cpp
         src/subject/Subject.cpp
         src/subject/Subject.h
         src/wrapper/Wrapper.cpp
-        src/wrapper/Wrapper.h)
+        src/wrapper/Wrapper.h
+)
