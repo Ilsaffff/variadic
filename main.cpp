@@ -13,7 +13,7 @@ int main() {
     engine.register_command(wrapper, "first_arg");
     engine.register_command(wrapper_sum, "sum_int");
     std::cout << engine.execute("first_arg", {{"arg1", 5},
-                                              {"arg2", 6}}) << "\n"; // Return 6
+                                              {"arg2", 6}}) << "\n"; // Return 5
     std::cout << engine.execute("sum_int", {{"arg1", 5},
                                             {"arg2", 6}}) << "\n"; // Return 11
 
