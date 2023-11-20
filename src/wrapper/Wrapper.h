@@ -1,40 +1,43 @@
 #pragma once
 
-
 #include <tuple>
 #include <string>
 #include <map>
 #include <list>
 #include <iostream>
+#include "variant"
+#include "unordered_map"
 #include "../subject/Subject.h"
 
 
-template<typename T, typename ... Args>
+template<typename T, typename ...Args>
 class Wrapper {
 public:
     Wrapper() = default;
 
+    Wrapper(Subject<T, Args...> *new_subject, T (Subject<T, Args...>::*new_func)(T &, Args &...),
+            std::unordered_map<std::string, T> &&default_args);
 
-    Wrapper(Subject<T> *new_subject, T (Subject<T>::*new_func)(T&, Args&...),
-            std::initializer_list<std::tuple<std::string, T>> &&new_args);
+    T run_func(std::unordered_map<std::string, T> &&current_args);
 
 
 private:
-    Subject<T> *subject;
+    Subject<T, Args...> *subject;
 
-    T (Subject<T>::*func)(T&, Args&...);
+    T (Subject<T, Args...>::*func)(T &, Args &...);
 
-    std::map<std::string, T> args;
+    std::unordered_map<std::string, T> default_args;
 
-    std::tuple<Args...> tuple_args;
+
+    template<std::size_t... Indices>
+    std::tuple<T, Args...>
+    fill_tuple_helper(const std::vector<T> &values, std::index_sequence<Indices...>);
+
+    std::tuple<T, Args...> fill_tuple(const std::vector<T> &values);
+
+    std::vector<T> validate_args(std::unordered_map<std::string, T> &current_args);
 
 };
 
-template<typename T, typename... Args>
-Wrapper<T, Args...>::Wrapper(Subject<T> *new_subject, T (Subject<T>::*new_func)(T &, Args&...),
-                             std::initializer_list<std::tuple<std::string, T>> &&new_args):
-        func(new_func), subject(new_subject) {
-        }
 
-
-
+#include "Wrapper.tpp"

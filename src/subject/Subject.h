@@ -3,25 +3,17 @@
 #include <tuple>
 #include <vector>
 
-template<typename T>
+template<typename T, typename... Args>
 class Subject {
 public:
-    Subject(){};
+    Subject() = default;
 
-    template<typename ... Args>
-    T sum(T &first_arg, Args& ...);
+    T get_first_arg(T &first_arg, Args &...args);
 
-    T sum(T &first_arg);
+    T sum(T &first_arg, Args &...args);
+
+    T sum(T &last_arg);
+
 };
 
-template<typename T>
-T Subject<T>::sum(T &first_arg) {
-    return first_arg;
-}
-
-
-template<typename T>
-template<typename ...Args>
-T Subject<T>::sum(T &first_arg, Args &...args) {
-    return first_arg + sum(args...);
-}
+#include "Subject.tpp"

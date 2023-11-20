@@ -4,10 +4,7 @@ project(variadic)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(variadic main.cpp
-        src/engine/Engine.cpp
         src/engine/Engine.h
-        src/subject/Subject.cpp
         src/subject/Subject.h
-        src/wrapper/Wrapper.cpp
         src/wrapper/Wrapper.h
 )
